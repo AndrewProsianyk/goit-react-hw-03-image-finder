@@ -3,6 +3,7 @@ import ImgApi from './ImgApi'
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Modal from './Modal';
+import Button from './Button';
 import styles from './App.module.css';
 
 
@@ -24,10 +25,16 @@ class App extends Component {
     }
 
     if (this.state.searchQuery !== 2 && prevState.currentPage !== this.state.currentPage) {
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth',
-      });
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
+            }, 100);
+      // window.scrollTo({
+      //   top: document.documentElement.scrollHeight,
+      //   behavior: 'smooth',
+      // });
     }
   }
 
@@ -43,7 +50,7 @@ class App extends Component {
     ImgApi(options).then(hits => {
       this.setState(prevState => ({
         hits: [...prevState.hits, ...hits],
-        cuttentPage:prevState.currentPage + 1
+        currentPage:prevState.currentPage + 1
       }))
     })
       .catch(error => this.setState({ error: 'No pictures found' })).finally(() => this.setState({
@@ -88,7 +95,7 @@ class App extends Component {
 
         {/* {isLoading && <loader/>} */}
         {hits.length > 11 && !isLoading && (
-          <button onClick={this.fetchHits}/>
+          <Button onClick={this.fetchHits}/>
         )}
 
         {showModal && (

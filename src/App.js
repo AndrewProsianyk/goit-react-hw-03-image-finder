@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ImgApi from './ImgApi';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Modal from './Modal';
 import Button from './Button';
 import Loader from './Loader';
-import styles from './App.module.css';
+import  './App.module.css';
 
 
 
 class App extends Component {
+  static propTypes = {
+    hits: PropTypes.array,
+    searchQuery: PropTypes.string,
+    currentPage: PropTypes.number,
+    isLoading: PropTypes.bool,
+    showModal: PropTypes.bool,
+    tags: PropTypes.string,
+    error: PropTypes.string,
+    largeImageURL: PropTypes.string
+  }
+
   state = {
     hits: [],
     searchQuery: '',
@@ -65,12 +77,12 @@ class App extends Component {
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({
-      showModal: !showModal,
+      showModal: !showModal
     }));
   }
 
   onOpenModalImg = (largeImageURL = '') => {
-    this.setState({ largeImageURL });
+    this.setState({largeImageURL});
     this.toggleModal();
   };
 
@@ -96,9 +108,12 @@ class App extends Component {
         )}
 
         {showModal && (
-          <Modal>
-            <img src={largeImageURL} alt={tags}/>
-          </Modal>
+          <Modal
+            src={largeImageURL}
+            alt={tags}
+            onClose={this.onOpenModalImg}
+          />
+
         )}
       </>
     )

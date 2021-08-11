@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './Button.module.css'
 
 const Button = ({ onClick }) => (
@@ -9,8 +9,8 @@ const Button = ({ onClick }) => (
     );
 
 
-// Button.propTypes = {
-//     onClick: PropTypes.func.isRequired,
-// };
+Button.propTypes = {
+    onClick: PropTypes.func.isRequired
+};
 
 export default Button;

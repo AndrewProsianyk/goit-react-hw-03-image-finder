@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import ImgApi from './ImgApi'
+import ImgApi from './ImgApi';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Modal from './Modal';
 import Button from './Button';
+import Loader from './Loader';
 import styles from './App.module.css';
+
 
 
 class App extends Component {
@@ -25,17 +27,19 @@ class App extends Component {
     }
 
     if (this.state.searchQuery !== 2 && prevState.currentPage !== this.state.currentPage) {
-      setTimeout(() => {
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'smooth',
-        });
-            }, 100);
-      // window.scrollTo({
-      //   top: document.documentElement.scrollHeight,
-      //   behavior: 'smooth',
-      // });
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
     }
+  }
+  onChangeQuery = query => {
+    this.setState({
+      searchQuery: query,
+      currentPage: 1,
+      hits: [],
+      error: null
+    })
   }
 
   fetchHits = () => {
@@ -58,14 +62,6 @@ class App extends Component {
       }))
   }
 
-  onChangeQuery = query => {
-    this.setState({
-      searchQuery: query,
-      currentPage: 1,
-      hits: [],
-      error: null
-    })
-  }
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({
@@ -93,7 +89,8 @@ class App extends Component {
           onOpenModalImg={this.onOpenModalImg}
         />
 
-        {/* {isLoading && <loader/>} */}
+        {isLoading &&
+          <Loader />}
         {hits.length > 11 && !isLoading && (
           <Button onClick={this.fetchHits}/>
         )}
